@@ -5,10 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #007BFF;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 6px 12px;
+            margin: 5px;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .edit {
+            background: #ffc107;
+            color: white;
+        }
+
+        .delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit:hover {
+            background: #e0a800;
+        }
+
+        .delete:hover {
+            background: #c82333;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Welcome to home page</h1>
+    <h1>Welcome to Home Page</h1>
     <%- include('partials/nav'); %>
 
     <table>
@@ -16,16 +89,29 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Email</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
         <tbody>
-            <% users.forEach(user => { %>
+            <% products.forEach(product => { %>
             <tr>
-                <td><%= user.id %></td>
-                <td><%= user.name %></td>
-                <td><%= user.email %></td>
+                <td><%= product.id %></td>
+                <td><%= product.name %></td>
+                <td><%= product.description %></td>
+                <td>
+                    <% if (product.image) { %>
+                        <img src="/uploads/<%= product.image %>" >
+                    <% } else { %>
+                        <p>No image</p> 
+                    <% } %>
+                </td>
+                <td class="actions">
+                    <a href="/edit/<%= product.id %>" class="edit">Edit</a>
+                    <a href="/delete/<%= product.id %>" class="delete" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
             </tr>
             <% }) %>
         </tbody>
